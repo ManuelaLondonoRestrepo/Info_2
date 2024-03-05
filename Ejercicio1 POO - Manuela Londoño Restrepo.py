@@ -47,6 +47,7 @@ class Vuelo:
         #Aquí se va a ir metiendo cada pasajero completo con su info
 
         #Aquí debo poner la dependencia con reserva vuelo apenas cree esa clase
+        reservaVuelos.adicionVuelo(self)
     
     #Defino los métodos de la clase vuelo
     #Método de instancia ---> (self)
@@ -65,9 +66,36 @@ class Vuelo:
             print(f'{pasajero.nombre} {pasajero.apellido} realizó una reserva')
         else:
             print('No hay asientos disponibles en este vuelo')
+    
+    #Relacion de asociación
+    def removerAsiento(self, pasajero):
+        if pasajero in self.reservas:
+            self.reservas.remove(pasajero)
+            self.asientosDisponibles = self.asientosDisponibles + 1
+            print(f'El pasajero {pasajero.nombre} {pasajero.apellido} ha cancelado su reserva')
+        else:
+            print(f'El pasajero {pasajero.nombre} {pasajero.apellido} no tiene reservas, no es posible hacer una cancelación')
+
+
 
 vuelo1 = Vuelo('MLR1832', 'Medellín', 'Miami', 60)
 
 vuelo1.mostrarInformacion()
 vuelo1.reservarAsiento(pasajero1)
 vuelo1.mostrarInformacion()
+vuelo1.removerAsiento(pasajero1)
+vuelo1.mostrarInformacion()
+
+class reservaVuelos:
+    #Atributo de clase
+    vuelos = []
+    def __init__(self, aerolínea):
+        self.aerolínea = aerolínea
+    
+    #Método de clase
+    @classmethod
+    def adicionVuelo(cls,vuelo):
+        if vuelo in cls.vuelos:
+            print(f'El vuelo {vuelo.numeroVuelo}')
+
+
